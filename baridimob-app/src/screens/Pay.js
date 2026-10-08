@@ -9,7 +9,7 @@ import SubHeader from '../components/SubHeader';
 import SuccessCard from '../components/SuccessCard';
 import ScannerModal from '../components/ScannerModal';
 
-export default function Pay({ balance, onConfirm, onBack }) {
+export default function Pay({ balance, cardFrozen, onConfirm, onBack }) {
   const [scanOpen, setScanOpen] = useState(false);
   const [merchant, setMerchant] = useState(null);
   const [amount, setAmount] = useState('');
@@ -26,6 +26,7 @@ export default function Pay({ balance, onConfirm, onBack }) {
   };
 
   const submit = () => {
+    if (cardFrozen) return setError('البطاقة مجمّدة، فعّلها من شاشة البطاقات');
     const value = parseFloat(amount.replace(',', '.'));
     if (!value || value <= 0) return setError('أدخل مبلغاً صحيحاً');
     if (value > balance) return setError('الرصيد غير كافٍ');

@@ -13,7 +13,7 @@ const actions = [
   { icon: 'swap-horizontal', label: 'تحويل', screen: 'transfer' },
   { icon: 'document-text-outline', label: 'كشف الحساب', screen: 'statement' },
   { icon: 'qr-code-outline', label: 'دفع', screen: 'pay' },
-  { icon: 'grid-outline', label: 'المزيد' },
+  { icon: 'grid-outline', label: 'المزيد', screen: 'more' },
 ];
 
 export default function Home({ userName, balance, transactions, go, onShowQr }) {
@@ -43,9 +43,9 @@ export default function Home({ userName, balance, transactions, go, onShowQr }) 
             <View style={s.circle}>
               <Ionicons name="person-outline" size={20} color="#fff" />
             </View>
-            <View style={s.circle}>
+            <TouchableOpacity style={s.circle} onPress={() => go('info')}>
               <Ionicons name="notifications-outline" size={20} color={GOLD} />
-            </View>
+            </TouchableOpacity>
             <TouchableOpacity style={s.circleGold} onPress={onShowQr}>
               <Ionicons name="qr-code-outline" size={20} color={DEEP} />
             </TouchableOpacity>
