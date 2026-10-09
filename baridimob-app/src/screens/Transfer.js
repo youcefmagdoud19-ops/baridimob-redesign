@@ -9,7 +9,7 @@ import SubHeader from '../components/SubHeader';
 import SuccessCard from '../components/SuccessCard';
 import ScannerModal from '../components/ScannerModal';
 
-export default function Transfer({ balance, prefill, onSaveTemplate, onConfirm, onBack }) {
+export default function Transfer({ balance, prefill, guard, onSaveTemplate, onConfirm, onBack }) {
   const [rip, setRip] = useState(prefill ? groupRip(prefill.rip) : '');
   const [amount, setAmount] = useState(prefill && prefill.amount ? String(prefill.amount) : '');
   const [note, setNote] = useState('');
@@ -48,8 +48,20 @@ export default function Transfer({ balance, prefill, onSaveTemplate, onConfirm, 
     if (!value || value <= 0) return setError('أدخل مبلغاً صحيحاً');
     if (value > balance) return setError('الرصيد غير كافٍ');
     setError('');
-    onConfirm(value, note.trim() || 'تحويل');
-    setDone(value);
+    guard(
+      {
+        title: 'تأكيد التحويل',
+        amount: value,
+        rows: [
+          { label: 'إلى الحساب', value: groupRip(clean) },
+          { label: 'ملاحظة', value: note.trim() || '-' },
+        ],
+      },
+      () => {
+        onConfirm(value, note.trim() || 'تحويل');
+        setDone(value);
+      }
+    );
   };
 
   return (

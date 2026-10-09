@@ -1,12 +1,13 @@
-import { View, Text } from 'react-native';
+import { View, Text, TouchableOpacity } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { s } from '../styles';
 import { RED, GREEN } from '../theme';
 
-export default function TxItem({ t }) {
+export default function TxItem({ t, onPress }) {
   const out = t.amount < 0;
+  const Wrapper = onPress ? TouchableOpacity : View;
   return (
-    <View style={s.tx}>
+    <Wrapper style={s.tx} {...(onPress ? { onPress } : {})}>
       <View style={s.txIcon}>
         <Ionicons name={out ? 'arrow-up' : 'arrow-down'} size={18} color={out ? RED : GREEN} />
       </View>
@@ -18,6 +19,6 @@ export default function TxItem({ t }) {
         {out ? '-' : '+'}
         {Math.abs(t.amount).toLocaleString('en-US')} د.ج
       </Text>
-    </View>
+    </Wrapper>
   );
 }

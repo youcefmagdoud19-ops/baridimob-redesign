@@ -645,7 +645,7 @@ export default function App() {
         amount: -value,
       },
       ...list,
-    ]);
+    ]);$
   };
 
   return (

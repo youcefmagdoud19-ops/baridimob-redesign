@@ -28,7 +28,7 @@ const CONFIG = {
   },
 };
 
-export default function Requests({ type, requests, balance, onSubmit, onAdvance, onBack }) {
+export default function Requests({ type, requests, balance, guard, onSubmit, onAdvance, onBack }) {
   const cfg = CONFIG[type];
   const [kind, setKind] = useState('new');
   const [office, setOffice] = useState(OFFICES[0].key);
@@ -39,18 +39,33 @@ export default function Requests({ type, requests, balance, onSubmit, onAdvance,
   const submit = () => {
     if (cfg.fee > balance) return setError('الرصيد غير كافٍ');
     setError('');
-    onSubmit(
-      {
-        id: Date.now(),
-        type,
-        title: cfg.kinds ? cfg.kinds.find((k) => k.key === kind).label : cfg.single,
-        office: OFFICES.find((o) => o.key === office).name,
-        date: new Date().toISOString().slice(0, 10),
-        status: 0,
-      },
-      cfg.fee
-    );
-    setSent(true);
+    const req = {
+      id: Date.now(),
+      type,
+      title: cfg.kinds ? cfg.kinds.find((k) => k.key === kind).label : cfg.single,
+      office: OFFICES.find((o) => o.key === office).name,
+      date: new Date().toISOString().slice(0, 10),
+      status: 0,
+    };
+    const run = () => {
+      onSubmit(req, cfg.fee);
+      setSent(true);
+    };
+    if (cfg.fee > 0) {
+      guard(
+        {
+          title: 'تأكيد الطلب',
+          amount: cfg.fee,
+          rows: [
+            { label: 'الطلب', value: req.title },
+            { label: 'مكتب الاستلام', value: req.office },
+          ],
+        },
+        run
+      );
+    } else {
+      run();
+    }
   };
 
   return (

@@ -16,7 +16,7 @@ const actions = [
   { icon: 'grid-outline', label: 'المزيد', screen: 'more' },
 ];
 
-export default function Home({ userName, balance, transactions, go, onShowQr }) {
+export default function Home({ userName, balance, transactions, unread, go, onShowQr, onOpenTx }) {
   const [hidden, setHidden] = useState(false);
   const [copied, setCopied] = useState(false);
 
@@ -40,11 +40,16 @@ export default function Home({ userName, balance, transactions, go, onShowQr }) 
         <View style={s.deco3} />
         <View style={s.topBar}>
           <View style={s.iconRow}>
-            <View style={s.circle}>
+            <TouchableOpacity style={s.circle} onPress={() => go('profile')}>
               <Ionicons name="person-outline" size={20} color="#fff" />
-            </View>
-            <TouchableOpacity style={s.circle} onPress={() => go('info')}>
+            </TouchableOpacity>
+            <TouchableOpacity style={s.circle} onPress={() => go('notifications')}>
               <Ionicons name="notifications-outline" size={20} color={GOLD} />
+              {unread > 0 ? (
+                <View style={s.badge}>
+                  <Text style={s.badgeText}>{unread > 9 ? '9+' : unread}</Text>
+                </View>
+              ) : null}
             </TouchableOpacity>
             <TouchableOpacity style={s.circleGold} onPress={onShowQr}>
               <Ionicons name="qr-code-outline" size={20} color={DEEP} />
@@ -115,7 +120,7 @@ export default function Home({ userName, balance, transactions, go, onShowQr }) 
         </TouchableOpacity>
       </View>
       {transactions.slice(0, 3).map((t) => (
-        <TxItem key={t.id} t={t} />
+        <TxItem key={t.id} t={t} onPress={() => onOpenTx(t)} />
       ))}
     </ScrollView>
   );

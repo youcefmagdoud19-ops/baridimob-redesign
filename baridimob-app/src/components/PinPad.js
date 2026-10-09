@@ -10,13 +10,14 @@ const LENGTH = 4;
   لوحة أرقام لإدخال PIN من 4 خانات.
   light = true للخلفيات الداكنة (شاشة القفل)
 */
-export default function PinPad({ title, subtitle, error, onComplete, light }) {
+export default function PinPad({ title, subtitle, error, onComplete, light, disabled }) {
   const [value, setValue] = useState('');
   const accent = light ? GOLD : BLUE;
   const textColor = light ? '#fff' : DARK;
   const keyBg = light ? 'rgba(255,255,255,0.14)' : '#E6EEFA';
 
   const press = (k) => {
+    if (disabled) return;
     if (k === 'del') {
       setValue((v) => v.slice(0, -1));
       return;
@@ -32,7 +33,7 @@ export default function PinPad({ title, subtitle, error, onComplete, light }) {
   };
 
   return (
-    <View style={p.wrap}>
+    <View style={[p.wrap, disabled && { opacity: 0.5 }]}>
       <Text style={[p.title, { color: textColor }]}>{title}</Text>
       {subtitle ? (
         <Text style={[p.sub, { color: light ? '#FFE08A' : GRAY }]}>{subtitle}</Text>

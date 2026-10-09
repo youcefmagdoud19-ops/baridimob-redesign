@@ -12,7 +12,7 @@ import ChoiceChips from '../components/ChoiceChips';
 const mmss = (sec) =>
   `${String(Math.floor(sec / 60)).padStart(2, '0')}:${String(sec % 60).padStart(2, '0')}`;
 
-export default function Cardless({ balance, onConfirm, onBack }) {
+export default function Cardless({ balance, guard, onConfirm, onBack }) {
   const [amount, setAmount] = useState(5000);
   const [error, setError] = useState('');
   const [session, setSession] = useState(null); // { code, amount, expires }
@@ -45,9 +45,15 @@ export default function Cardless({ balance, onConfirm, onBack }) {
   // لا يُخصم المبلغ إلا عند "السحب" الفعلي حتى لا يضيع رصيدك إن أُغلق التطبيق
   const simulateWithdraw = () => {
     if (session.amount > balance) return setError('الرصيد غير كافٍ');
-    onConfirm(session.amount, 'سحب بدون بطاقة');
-    setDone(session.amount);
-    setSession(null);
+    const amt = session.amount;
+    guard(
+      { title: 'تأكيد السحب', amount: amt, rows: [{ label: 'نوع العملية', value: 'سحب بدون بطاقة' }] },
+      () => {
+        onConfirm(amt, 'سحب بدون بطاقة');
+        setDone(amt);
+        setSession(null);
+      }
+    );
   };
 
   return (

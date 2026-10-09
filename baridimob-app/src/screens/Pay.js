@@ -9,7 +9,7 @@ import SubHeader from '../components/SubHeader';
 import SuccessCard from '../components/SuccessCard';
 import ScannerModal from '../components/ScannerModal';
 
-export default function Pay({ balance, cardFrozen, onConfirm, onBack }) {
+export default function Pay({ balance, cardFrozen, guard, onConfirm, onBack }) {
   const [scanOpen, setScanOpen] = useState(false);
   const [merchant, setMerchant] = useState(null);
   const [amount, setAmount] = useState('');
@@ -31,8 +31,20 @@ export default function Pay({ balance, cardFrozen, onConfirm, onBack }) {
     if (!value || value <= 0) return setError('أدخل مبلغاً صحيحاً');
     if (value > balance) return setError('الرصيد غير كافٍ');
     setError('');
-    onConfirm(value, `دفع إلى ${merchant.name}`);
-    setDone(value);
+    guard(
+      {
+        title: 'تأكيد الدفع',
+        amount: value,
+        rows: [
+          { label: 'التاجر', value: merchant.name },
+          { label: 'الحساب', value: groupRip(merchant.rip) },
+        ],
+      },
+      () => {
+        onConfirm(value, `دفع إلى ${merchant.name}`);
+        setDone(value);
+      }
+    );
   };
 
   return (

@@ -90,4 +90,7 @@ export const s = StyleSheet.create({
   activeDot: { width: 5, height: 5, borderRadius: 3, backgroundColor: GOLD, marginTop: 3 },
   centerWrap: { marginTop: -28 },
   centerBtn: { width: 62, height: 62, borderRadius: 31, alignItems: 'center', justifyContent: 'center', borderWidth: 3, borderColor: GOLD },
+
+  badge: { position: 'absolute', top: -4, right: -4, minWidth: 18, height: 18, borderRadius: 9, backgroundColor: RED, alignItems: 'center', justifyContent: 'center', paddingHorizontal: 4 },
+  badgeText: { color: '#fff', fontSize: 10, fontWeight: '700' },
 });

@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { View, Text, TouchableOpacity, Modal } from 'react-native';
 import { s } from '../styles';
 import { BLUE } from '../theme';
-import { verifyPin, setPin, removePin } from '../storage';
+import { checkPin, setPin, removePin } from '../storage';
 import PinPad from './PinPad';
 
 /*
@@ -26,8 +26,14 @@ export default function PinModal({ mode, onClose, onDone }) {
     setError('');
 
     if (step === 'old') {
-      const ok = await verifyPin(code);
-      if (!ok) return setError('الرمز غير صحيح');
+      const r = await checkPin(code);
+      if (!r.ok) {
+        return setError(
+          r.locked
+            ? `تم تعطيل المحاولات مؤقتاً، حاول بعد ${r.wait} ثانية`
+            : `الرمز غير صحيح، المحاولات المتبقية: ${r.attemptsLeft}`
+        );
+      }
       if (mode === 'disable') {
         await removePin();
         onDone(false);

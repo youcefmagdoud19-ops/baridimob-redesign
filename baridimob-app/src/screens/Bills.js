@@ -10,7 +10,7 @@ import SuccessCard from '../components/SuccessCard';
 import PrimaryButton from '../components/PrimaryButton';
 import ChoiceChips from '../components/ChoiceChips';
 
-export default function Bills({ balance, onConfirm, onBack }) {
+export default function Bills({ balance, guard, onConfirm, onBack }) {
   const [provider, setProvider] = useState('sonelgaz');
   const [ref, setRef] = useState('');
   const [bill, setBill] = useState(null);
@@ -37,8 +37,20 @@ export default function Bills({ balance, onConfirm, onBack }) {
   const pay = () => {
     if (bill.amount > balance) return setError('الرصيد غير كافٍ');
     setError('');
-    onConfirm(bill.amount, `فاتورة ${p.name}`);
-    setDone(bill.amount);
+    guard(
+      {
+        title: 'تأكيد دفع الفاتورة',
+        amount: bill.amount,
+        rows: [
+          { label: 'الجهة', value: p.name },
+          { label: 'المرجع', value: bill.ref },
+        ],
+      },
+      () => {
+        onConfirm(bill.amount, `فاتورة ${p.name}`);
+        setDone(bill.amount);
+      }
+    );
   };
 
   return (

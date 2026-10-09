@@ -9,6 +9,8 @@
     "expo-camera": "~57.0.6",
     "expo-clipboard": "~57.0.2",
     "expo-linear-gradient": "~57.0.2",
+    "expo-local-authentication": "~57.0.3",
+    "expo-screen-capture": "~57.0.4",
     "expo-secure-store": "~57.0.4",
     "expo-status-bar": "~57.0.1",
     "react": "19.2.3",

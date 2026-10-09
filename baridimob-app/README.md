@@ -8,7 +8,7 @@
    npx create-expo-app@latest baridimob-app --template blank
 2. فك ضغط هذا الملف داخل مجلد المشروع (يستبدل App.js ويضيف مجلد src).
 3. ثبّت الحزم من داخل مجلد المشروع:
-   npx expo install expo-linear-gradient expo-clipboard expo-camera react-native-svg @react-native-async-storage/async-storage expo-secure-store
+   npx expo install expo-linear-gradient expo-clipboard expo-camera react-native-svg @react-native-async-storage/async-storage expo-secure-store expo-local-authentication expo-screen-capture
    npm install react-native-qrcode-svg
 4. شغّل:
    npx expo start -c
@@ -38,3 +38,14 @@ BARIDI|RIP(20 رقماً)|المبلغ|اسم التاجر
 دفع الفواتير (سونلغاز، سيال، الجزائرية للمياه، اتصالات الجزائر) | شحن الهاتف (موبيليس، جيزي، أوريدو)
 الدفع بالمسح | سحب بدون بطاقة | دفتر الشيكات | طلب/تجديد البطاقة الذهبية | نماذج العمليات
 رمز QR الحساب | الموزعات الآلية ومكاتب البريد (تفتح تطبيق الخرائط) | معلومات مفيدة
+
+## الأمان
+
+- رمز PIN من 4 أرقام (تخزين مشفّر SecureStore)، وكل 5 محاولات خاطئة تعطّل الإدخال مؤقتاً
+- قفل تلقائي عند مغادرة التطبيق (فوراً / 30 ثانية / دقيقة / 5 دقائق)
+- فتح بالبصمة (expo-local-authentication)
+- إخفاء المحتوى ومنع لقطات الشاشة (expo-screen-capture)
+
+## شاشات إضافية
+
+الإشعارات (مع عدّاد على الجرس) | الملف الشخصي | تفاصيل العملية ومشاركة الوصل | بحث وفترات في كشف الحساب

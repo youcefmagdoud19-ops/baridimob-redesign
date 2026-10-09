@@ -8,7 +8,7 @@ import SuccessCard from '../components/SuccessCard';
 import PrimaryButton from '../components/PrimaryButton';
 import ChoiceChips from '../components/ChoiceChips';
 
-export default function TopUp({ balance, onConfirm, onBack }) {
+export default function TopUp({ balance, guard, onConfirm, onBack }) {
   const [op, setOp] = useState('mobilis');
   const [phone, setPhone] = useState('');
   const [amount, setAmount] = useState(500);
@@ -23,8 +23,20 @@ export default function TopUp({ balance, onConfirm, onBack }) {
       return setError(`الرقم لا يطابق المشغّل: أرقام ${operator.name} تبدأ بـ ${operator.prefix}`);
     if (amount > balance) return setError('الرصيد غير كافٍ');
     setError('');
-    onConfirm(amount, `شحن ${operator.name} - ${clean}`);
-    setDone(amount);
+    guard(
+      {
+        title: 'تأكيد الشحن',
+        amount,
+        rows: [
+          { label: 'المشغّل', value: operator.name },
+          { label: 'رقم الهاتف', value: clean },
+        ],
+      },
+      () => {
+        onConfirm(amount, `شحن ${operator.name} - ${clean}`);
+        setDone(amount);
+      }
+    );
   };
 
   return (
