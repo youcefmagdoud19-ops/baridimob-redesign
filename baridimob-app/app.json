@@ -11,11 +11,8 @@
     },
     "android": {
       "adaptiveIcon": {
-        "package": "com.baridimobdemo.app",
-        "backgroundColor": "#E6F4FE",
-        "foregroundImage": "./assets/android-icon-foreground.png",
-        "backgroundImage": "./assets/android-icon-background.png",
-        "monochromeImage": "./assets/android-icon-monochrome.png"
+        "backgroundColor": "#0052CC",
+        "foregroundImage": "./assets/android-icon-foreground.png"
       },
       "package": "com.youcef.megdoud.baridimobapp"
     },
