@@ -27,6 +27,12 @@
         "projectId": "b3a08bef-75bc-4fe2-8241-f122b564afb8"
       }
     },
-    "owner": "youcef.megdoud"
+    "owner": "youcef.megdoud",
+    "runtimeVersion": {
+      "policy": "appVersion"
+    },
+    "updates": {
+      "url": "https://u.expo.dev/b3a08bef-75bc-4fe2-8241-f122b564afb8"
+    }
   }
 }
