@@ -11,7 +11,7 @@
     },
     "android": {
       "adaptiveIcon": {
-        "backgroundColor": "#0052CC",
+        "backgroundColor": "#051A3D",
         "foregroundImage": "./assets/android-icon-foreground.png"
       },
       "package": "com.youcef.megdoud.baridimobapp"
